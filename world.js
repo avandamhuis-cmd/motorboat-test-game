@@ -5,6 +5,30 @@ const WORLD_HEIGHT = 3000;
 const ISLAND_R = 400;
 const BEACH_SIZE = 60; // beach thickness
 
+// Dock object
+const dock = {
+  x: WORLD_WIDTH/2 + 300,
+  y: WORLD_HEIGHT/2 + 100,
+  width: 300,
+  height: 80
+};
+
+// NPC object
+const npc = {
+  x: dock.x + 50,
+  y: dock.y - 10,
+  r: 20
+};
+
+// Cargo crate object
+const crate = {
+  x: npc.x + 40,
+  y: npc.y,
+  width: 30,
+  height: 30,
+  color: '#8B4513' // brownish
+};
+
 // Draw full water background
 function drawWater(ctx, canvas) {
   ctx.fillStyle = '#3bb9ff';
@@ -27,6 +51,29 @@ function drawIsland(ctx, camera) {
   ctx.beginPath();
   ctx.arc(cx, cy, ISLAND_R, 0, Math.PI * 2);
   ctx.fill();
+}
+
+// Draw dock + NPC + crate
+function drawDockArea(ctx, camera) {
+  // Dock
+  ctx.fillStyle = '#555'; // grey
+  ctx.fillRect(dock.x - camera.x, dock.y - camera.y, dock.width, dock.height);
+
+  // NPC (same style as player)
+  const sx = npc.x - camera.x;
+  const sy = npc.y - camera.y;
+  ctx.fillStyle = '#a67c52'; // outer
+  ctx.beginPath();
+  ctx.arc(sx, sy, npc.r, 0, Math.PI*2);
+  ctx.fill();
+  ctx.fillStyle = '#ffdbac'; // inner
+  ctx.beginPath();
+  ctx.arc(sx, sy, npc.r-3, 0, Math.PI*2);
+  ctx.fill();
+
+  // Cargo crate
+  ctx.fillStyle = crate.color;
+  ctx.fillRect(crate.x - camera.x, crate.y - camera.y, crate.width, crate.height);
 }
 
 // Check if player is walking on water
