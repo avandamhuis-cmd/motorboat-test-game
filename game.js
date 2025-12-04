@@ -7,7 +7,10 @@ function loop() {
 
   drawWater(ctx, canvas);
   drawIsland(ctx, camera);
+
   player.draw(ctx, camera);
+
+  drawMiniMap(ctx, player); // new!
 
   requestAnimationFrame(loop);
 }
